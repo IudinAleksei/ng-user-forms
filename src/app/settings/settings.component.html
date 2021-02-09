@@ -1,1 +1,54 @@
-<p>settings works!</p>
+<mat-card>
+  <mat-card-content>
+    <form>
+      <p>
+        <mat-form-field>
+          <mat-label>ФИО</mat-label>
+          <input matInput type="text" disabled value="Иванов Иван Иванович">
+        </mat-form-field>
+      </p>
+      <mat-divider></mat-divider>
+      <p>
+        <mat-form-field>
+          <mat-label>Псевдоним</mat-label>
+          <input matInput type="text" value="Иванов Иван Иванович">
+          <button mat-button *ngIf="true" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <label>Pick your favorite
+          <mat-checkbox>Check me!</mat-checkbox>
+          <mat-radio-group>
+            <mat-radio-button>
+             Email
+            </mat-radio-button>
+            <mat-radio-button>
+              Телефон
+            </mat-radio-button>
+          </mat-radio-group>
+          <mat-form-field>
+            <mat-label>Псевдоним</mat-label>
+            <input matInput type="text" value="Иванов Иван Иванович">
+            <button mat-button *ngIf="true" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Псевдоним</mat-label>
+            <input matInput type="text" value="Иванов Иван Иванович">
+            <button mat-button *ngIf="true" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </label>
+      </p>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary">Отменить изменения</button>
+    <button mat-raised-button color="primary">Сохранить</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,9 +1,18 @@
-mat-card {
-  display: block;
-  width: 100%;
-}
-
-mat-grid-tile {
+.main {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1000px;
+  // height: calc(100% - 80px);
+
+  &__user-list {
+    height: 100%;
+    width: 33%;
+  }
+
+  &__service-list {
+    height: 100%;
+    width: 65%;
+  }
 }

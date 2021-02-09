@@ -1,1 +1,31 @@
-<p>service-list works!</p>
+<mat-card class="service-list">
+  <mat-card-title>Подключенные услуги</mat-card-title>
+  <mat-card-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Услуга</mat-label>
+      <input matInput placeholder="Введите название" type="text" [(value)]="value">
+      <button mat-button *ngIf="value" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-list role="list">
+      <mat-list-item role="listitem">Item 1
+        <button mat-icon-button color="warn">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-title>Доступные услуги</mat-card-title>
+  <mat-card-content>
+    <mat-selection-list #shoes>
+      <mat-list-option>
+        Услуга
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary">Подключить</button>
+  </mat-card-actions>
+</mat-card>
