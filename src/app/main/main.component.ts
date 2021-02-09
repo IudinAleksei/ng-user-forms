@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { RequestService } from '../core/services/request.service';
 
 @Component({
   selector: 'app-main',
@@ -8,9 +9,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  constructor(private requestService: RequestService) { }
 
   ngOnInit(): void {
+    this.requestService.getUsersAndSettings()
+      .subscribe(res => console.log(res));
   }
 
 }

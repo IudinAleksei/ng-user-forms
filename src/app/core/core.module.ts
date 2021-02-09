@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatCardModule } from '@angular/material/card';
@@ -15,10 +16,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
+import { RequestService } from './services/request.service';
+
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    HttpClientModule,
     ReactiveFormsModule,
     MatCardModule,
     MatButtonToggleModule,
@@ -48,6 +52,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDividerModule,
     MatRadioModule,
     MatCheckboxModule
+  ],
+  providers: [
+    RequestService
   ]
 })
 export class CoreModule { }
