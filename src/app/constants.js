@@ -1,1 +1,1 @@
-export const URL = 'https://iudin.herokuapp.com/forms';
+export const BACKEND_URL = 'https://iudin.herokuapp.com/forms';
