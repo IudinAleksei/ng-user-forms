@@ -1,31 +1,48 @@
 <mat-card class="service-list">
-  <mat-card-title>Подключенные услуги</mat-card-title>
-  <mat-card-content>
+  <form [formGroup]="serviceForm" (input)="onSubmit()">
     <mat-form-field appearance="outline">
-      <mat-label>Услуга</mat-label>
-      <input matInput placeholder="Введите название" type="text" [(value)]="value">
-      <button mat-button *ngIf="value" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
+      <mat-label>Найти услугу</mat-label>
+      <input matInput placeholder="Введите название" type="text" formControlName="serviceName">
+      <button mat-button matSuffix mat-icon-button type="submit" *ngIf="serviceForm.value.serviceName" formControlName="clearButton">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-    <mat-list>
-      <mat-list-item *ngFor="let service of user.enabledServices">{{service}}
-        <button mat-icon-button color="warn">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-  <mat-divider></mat-divider>
-  <mat-card-title>Доступные услуги</mat-card-title>
-  <mat-card-content>
-    <mat-selection-list>
-      <mat-list-option checkboxPosition="before" *ngFor="let service of services">
-        {{service.title}} {{service.fee}}
-      </mat-list-option>
-    </mat-selection-list>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="primary">Подключить</button>
-  </mat-card-actions>
+
+    <p>{{serviceForm.value.serviceName}}</p>
+
+    <div formArrayName="aliases">
+
+      <div *ngFor="let alias of aliases.controls; let i=index">
+        <!-- The repeated alias template -->
+        <label>
+          Alias:
+          <input type="text" [formControlName]="i">
+        </label>
+      </div>
+    </div>
+
+
+    <!-- <mat-card-title>Подключенные услуги</mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let service of user.enabledServices">{{service}}
+          <button mat-icon-button color="warn">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-title>Доступные услуги</mat-card-title>
+    <mat-card-content>
+      <mat-selection-list>
+        <mat-list-option checkboxPosition="before" *ngFor="let service of services">
+          {{service.title}} {{service.fee}}
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary">Подключить</button>
+    </mat-card-actions> -->
+  </form>
 </mat-card>
