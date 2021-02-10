@@ -1,0 +1,13 @@
+<div class="user-list">
+  <mat-card class="user-list__item" *ngFor="let user of users">
+    <mat-card-title>{{user.name}}</mat-card-title>
+    <mat-card-content>
+      <span>
+        Услуг: {{user.enabledServices.length}}
+      </span>
+      <span>
+        Абон.плата:
+      </span>
+    </mat-card-content>
+  </mat-card>
+</div>
