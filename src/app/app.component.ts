@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { IRequest } from './core/models/request.model';
+import { DataService } from './core/services/data.service';
 import { RequestService } from './core/services/request.service';
 import { SessionStorageService } from './core/services/session-storage.service';
 
@@ -13,25 +15,29 @@ import { SessionStorageService } from './core/services/session-storage.service';
 export class AppComponent implements OnInit {
   data: IRequest;
 
-  constructor(private requestService: RequestService, private storage: SessionStorageService, private router: Router) { }
+  constructor(
+    private requestService: RequestService, private storage: SessionStorageService,
+    private router: Router, private dataService: DataService) { }
 
   ngOnInit(): void {
-
     const storageData: IRequest | null = this.storage.readRequest();
+
     if (!storageData) {
-      this.requestService.getUsersAndSettings()
-      .subscribe(
+      const request: Subscription = this.requestService.getUsersAndSettings()
+        .subscribe(
         res => {
           this.data = res;
           this.storage.writeRequest(res);
         },
         err => {
-        this.router.navigate(['error']);
-        console.warn('HTTP Error: ', err);
-        }
+          this.router.navigate(['error']);
+          console.warn('HTTP Error: ', err);
+        },
+        () => request.unsubscribe()
       );
     } else {
       this.data = storageData;
     }
+    this.dataService.write(this.data);
   }
 }

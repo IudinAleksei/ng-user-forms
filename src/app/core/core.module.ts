@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { RequestService } from './services/request.service';
+import { DataService } from './services/data.service';
 
 @NgModule({
   declarations: [],
@@ -11,7 +12,8 @@ import { RequestService } from './services/request.service';
   ],
   providers: [
     RequestService,
-    SessionStorageService
+    SessionStorageService,
+    DataService
   ]
 })
 export class CoreModule { }
