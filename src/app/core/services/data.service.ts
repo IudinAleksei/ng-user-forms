@@ -1,17 +1,26 @@
-import { IRequest } from './../models/request.model';
 import { Injectable } from '@angular/core';
+import { IRequest, IUser } from './../models/request.model';
 
 @Injectable()
 export class DataService {
-  private data: IRequest;
+  private cachedRequest: IRequest;
+  private selectedUser: IUser;
 
   constructor() { }
 
-  write(item: IRequest): void {
-    this.data = item;
+  writeRequest(request: IRequest): void {
+    this.cachedRequest = request;
   }
 
-  read(): IRequest {
-    return this.data;
+  readRequest(): IRequest {
+    return this.cachedRequest;
+  }
+
+  writeUser(user: IUser): void {
+    this.selectedUser = user;
+  }
+
+  readUser(): IUser {
+    return this.selectedUser;
   }
 }

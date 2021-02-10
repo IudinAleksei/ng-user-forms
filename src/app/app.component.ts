@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
     } else {
       this.data = storageData;
     }
-    this.dataService.write(this.data);
+    this.dataService.writeRequest(this.data);
+    this.dataService.writeUser(this.data.users[0]);
   }
 }

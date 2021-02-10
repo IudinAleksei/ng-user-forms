@@ -14,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRippleModule } from '@angular/material/core';
 
 const angularModules = [
   CommonModule,
@@ -31,7 +32,8 @@ const materialModules = [
   MatListModule,
   MatDividerModule,
   MatRadioModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatRippleModule
 ]
 @NgModule({
   declarations: [],

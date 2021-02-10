@@ -16,11 +16,12 @@ export class MainComponent implements OnInit {
   constructor(private storage: SessionStorageService, private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.data = this.dataService.read();
-    this.selectedUser = this.data.users[0];
+    this.data = this.dataService.readRequest();
+    this.selectedUser = this.dataService.readUser();
   }
 
   selectUser(user: IUser): void {
     this.selectedUser = user;
+    this.dataService.writeUser(user);
   }
 }

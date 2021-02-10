@@ -4,14 +4,14 @@
       <p>
         <mat-form-field>
           <mat-label>ФИО</mat-label>
-          <input matInput type="text" disabled value="Иванов Иван Иванович">
+          <input matInput type="text" disabled [value]="user.name">
         </mat-form-field>
       </p>
       <mat-divider></mat-divider>
       <p>
         <mat-form-field>
           <mat-label>Псевдоним</mat-label>
-          <input matInput type="text" value="Иванов Иван Иванович">
+          <input matInput type="text" [value]="user.name">
           <button mat-button *ngIf="true" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
             <mat-icon>close</mat-icon>
           </button>
@@ -20,7 +20,7 @@
 
       <p>
         <label>Pick your favorite
-          <mat-checkbox>Check me!</mat-checkbox>
+          <mat-checkbox>Оповещения</mat-checkbox>
           <mat-radio-group>
             <mat-radio-button>
              Email
@@ -30,15 +30,15 @@
             </mat-radio-button>
           </mat-radio-group>
           <mat-form-field>
-            <mat-label>Псевдоним</mat-label>
-            <input matInput type="text" value="Иванов Иван Иванович">
+            <mat-label>Email</mat-label>
+            <input matInput type="text">
             <button mat-button *ngIf="true" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>Псевдоним</mat-label>
-            <input matInput type="text" value="Иванов Иван Иванович">
+            <mat-label>Телефон</mat-label>
+            <input matInput type="text">
             <button mat-button *ngIf="true" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
               <mat-icon>close</mat-icon>
             </button>

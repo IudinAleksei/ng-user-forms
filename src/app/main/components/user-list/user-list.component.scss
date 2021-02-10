@@ -2,6 +2,8 @@
   height: 100%;
 
   &__item {
+    height: 80px;
+    cursor: pointer;
     margin-bottom: 1rem;
   }
 }

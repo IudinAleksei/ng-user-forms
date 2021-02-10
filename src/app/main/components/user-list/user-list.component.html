@@ -1,5 +1,5 @@
 <div class="user-list">
-  <mat-card class="user-list__item" *ngFor="let user of users" (click)="userClickHandler(user)">
+  <mat-card matRipple matRippleCentered="true" class="user-list__item" *ngFor="let user of users" (click)="userClickHandler(user)">
     <mat-card-title>{{user.name}}</mat-card-title>
     <mat-card-content>
       <span>
