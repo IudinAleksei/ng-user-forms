@@ -1,3 +1,4 @@
+import { SessionStorageService } from './services/session-storage.service';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -9,7 +10,8 @@ import { RequestService } from './services/request.service';
     HttpClientModule,
   ],
   providers: [
-    RequestService
+    RequestService,
+    SessionStorageService
   ]
 })
 export class CoreModule { }

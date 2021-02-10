@@ -12,5 +12,4 @@ export class ServiceListComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

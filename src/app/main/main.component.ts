@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { RequestService } from '../core/services/request.service';
+import { SessionStorageService } from '../core/services/session-storage.service';
+import { IRequest } from '../core/models/request.model';
 
 @Component({
   selector: 'app-main',
@@ -9,18 +9,11 @@ import { RequestService } from '../core/services/request.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent implements OnInit {
+  data: IRequest;
 
-  constructor(private requestService: RequestService, private router: Router) { }
+  constructor(private storage: SessionStorageService) { }
 
   ngOnInit(): void {
-    this.requestService.getUsersAndSettings()
-      .subscribe(
-        res => console.log(res),
-        err => {
-        this.router.navigate(['error']);
-        console.warn('HTTP Error: ', err);
-        }
-      );
+    this.data = this.storage.readRequest();
   }
-
 }
