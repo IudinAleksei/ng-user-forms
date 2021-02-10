@@ -8,14 +8,13 @@ import { IUser, IRequest, IService } from './../../../core/models/request.model'
 })
 export class ServiceListComponent implements OnInit {
   @Input() data: IRequest;
-  user: IUser;
+  @Input() user: IUser;
   services: IService[];
   value = '';
 
   constructor() { }
 
   ngOnInit(): void {
-    this.user = this.data.users[0];
     this.services = this.data.services;
   }
 }

@@ -1,0 +1,8 @@
+@media(max-width: 800px) {
+  .settings-button {
+    margin: 0 !important;
+    &:first-of-type {
+      margin-bottom: 0.5rem !important;
+    }
+  }
+}
