@@ -1,5 +1,5 @@
 <mat-card class="service-list">
-  <form [formGroup]="serviceForm" (input)="onSubmit()">
+  <!-- <form [formGroup]="serviceForm" (input)="onSubmit()">
     <mat-form-field appearance="outline">
       <mat-label>Найти услугу</mat-label>
       <input matInput placeholder="Введите название" type="text" formControlName="serviceName">
@@ -13,19 +13,19 @@
     <div formArrayName="aliases">
 
       <div *ngFor="let alias of aliases.controls; let i=index">
-        <!-- The repeated alias template -->
+
         <label>
           Alias:
           <input type="text" [formControlName]="i">
         </label>
       </div>
-    </div>
+    </div> -->
 
 
-    <!-- <mat-card-title>Подключенные услуги</mat-card-title>
+    <mat-card-title>Подключенные услуги</mat-card-title>
     <mat-card-content>
       <mat-list>
-        <mat-list-item *ngFor="let service of user.enabledServices">{{service}}
+        <mat-list-item *ngFor="let service of user.enabledServices">{{user.servicesEnableDates[service] | date}}
           <button mat-icon-button color="warn">
             <mat-icon>close</mat-icon>
           </button>
@@ -43,6 +43,6 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary">Подключить</button>
-    </mat-card-actions> -->
-  </form>
+    </mat-card-actions>
+  <!-- </form> -->
 </mat-card>

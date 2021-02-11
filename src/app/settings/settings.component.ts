@@ -11,24 +11,56 @@ import { DataService } from '../core/services/data.service';
 })
 export class SettingsComponent implements OnInit {
   user: IUser;
-  settingsForm: FormGroup;
+  isEdited = false;
+  settingsForm = new FormGroup({
+    userName: new FormControl({value: '', disabled: true}, Validators.maxLength(200)),
+    psevdo: new FormControl('', Validators.maxLength(200)),
+    notification: new FormGroup({
+      enableNotification: new FormControl(false),
+      enableEmail: new FormControl({value: 'email', checked: true}),
+      email: new FormControl('mail@mail.com'),
+      enablePhone: new FormControl({value: 'phone', checked: false}),
+      phone: new FormControl('89000000000')
+    }),
+    discard: new FormControl(),
+    save: new FormControl()
+  });
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
     this.user = this.dataService.readUser();
-    this.settingsForm = new FormGroup({
-      userName: new FormControl({value: this.user.name, disabled: true}, Validators.maxLength(200)),
-      psevdo: new FormControl(this.user.name, Validators.maxLength(200)),
-      notification: new FormGroup({
-        enableNotification: new FormControl('checked'),
-        // enableEmail: new FormControl({value: 'email', checked: true}),
-        // email: new FormControl('mail@mail.com'),
-        // enablePhone: new FormControl({value: 'phone', checked: false}),
-        // phone: new FormControl('89000000000')
-      }),
-      // discard: new FormControl(),
-      // save: new FormControl()
+    this.settingsForm.patchValue({
+      userName: this.user.name,
+      psevdo: this.user.name,
+    });
+  }
+
+  formInput(): void {
+    this.isEdited = true;
+  }
+
+  clearPsevdo(): void {
+    this.settingsForm.patchValue({
+      psevdo: '',
+    });
+  }
+
+  clearPhone(event: Event): void {
+    event.preventDefault();
+    this.settingsForm.patchValue({
+      notification: {
+        phone: ''
+      },
+    });
+  }
+
+  clearEmail(event: Event): void {
+    event.preventDefault();
+    this.settingsForm.patchValue({
+      notification: {
+        email: ''
+      },
     });
   }
 }

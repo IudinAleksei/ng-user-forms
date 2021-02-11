@@ -5,17 +5,24 @@
 .notification-form {
   display: flex;
 
-  &__select {
+  &_inputs {
     display: flex;
     flex-direction: column;
+  }
+}
+
+.settings-button {
+
+  &:not(first-of-type) {
+    margin-left: 0.5rem;
   }
 }
 
 @media(max-width: 800px) {
   .settings-button {
     margin: 0 !important;
-    &:first-of-type {
-      margin-bottom: 0.5rem !important;
+    &:not(first-of-type) {
+      margin-top: 0.5rem !important;
     }
   }
 }

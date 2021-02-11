@@ -1,5 +1,5 @@
 <mat-card>
-  <form [formGroup]="settingsForm">
+  <form [formGroup]="settingsForm" (input)="formInput()">
     <mat-form-field class="form-text-field">
       <mat-label>ФИО</mat-label>
       <input matInput type="text" formControlName="userName">
@@ -8,86 +8,43 @@
     <mat-form-field class="form-text-field">
       <mat-label>Псевдоним</mat-label>
       <input matInput type="text" formControlName="psevdo">
-      <button mat-button matSuffix mat-icon-button  aria-label="Clear">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearPsevdo()" [disabled]="!settingsForm.value.psevdo">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
 
     <form class="notification-form" formGroupName="notification">
-      <mat-checkbox formControlName="enableNotification">Check me!</mat-checkbox>
-      <mat-radio-group class="notification-form__select" name="notification-select" value="1">
-        <mat-radio-button name="notification-select" value="1">
-          Email
-        </mat-radio-button>
-        <mat-radio-button name="notification-select" value="2">
-          Phone
-        </mat-radio-button>
-      </mat-radio-group>
-      <mat-form-field id="first-select" class="form-text-field">
-        <mat-label>Псевдоним</mat-label>
-        <input matInput type="text">
-      </mat-form-field>
-      <mat-form-field id="first-select" class="form-text-field">
-        <mat-label>Псевдоним</mat-label>
-        <input matInput type="text">
-      </mat-form-field>
-    </form>
+      <mat-checkbox formControlName="enableNotification">Оповещения</mat-checkbox>
+      <div class="notification-form__inputs">
 
+          <mat-form-field class="form-text-field">
+            <mat-label>Email</mat-label>
+            <mat-radio-button name="notification-select" value="1">
+              Email
+            </mat-radio-button>
+            <input matInput type="text" formControlName="email">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearEmail($event)" [disabled]="!settingsForm.value.notification.email">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+        <mat-form-field class="form-text-field">
+          <mat-radio-button name="notification-select" value="2">
+            Phone
+          </mat-radio-button>
+          <mat-label>Телефон</mat-label>
+          <input matInput type="text" formControlName="phone">
+          <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearPhone($event)" [disabled]="!settingsForm.value.notification.phone">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </form>
+    <button class="settings-button" mat-raised-button color="primary" [disabled]="!isEdited">Отменить изменения</button>
+    <button class="settings-button" mat-raised-button color="primary" [disabled]="!(settingsForm.valid && isEdited)">Сохранить</button>
   </form>
 
   <p>
     {{settingsForm.status}}
   </p>
-  <!-- <mat-card-content>
-    <form>
-      <p>
-        <mat-form-field>
-          <mat-label>ФИО</mat-label>
-          <input matInput type="text" disabled [value]="user.name">
-        </mat-form-field>
-      </p>
-      <mat-divider></mat-divider>
-      <p>
-        <mat-form-field>
-          <mat-label>Псевдоним</mat-label>
-          <input matInput type="text" [value]="user.name">
-          <button mat-button *ngIf="true" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-      </p>
-
-      <p>
-        <label>Pick your favorite
-          <mat-checkbox>Оповещения</mat-checkbox>
-          <mat-radio-group>
-            <mat-radio-button>
-             Email
-            </mat-radio-button>
-            <mat-radio-button>
-              Телефон
-            </mat-radio-button>
-          </mat-radio-group>
-          <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input matInput type="text">
-            <button mat-button *ngIf="true" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Телефон</mat-label>
-            <input matInput type="text">
-            <button mat-button *ngIf="true" matSuffix mat-icon-button  aria-label="Clear" (click)="value=''">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field>
-        </label>
-      </p>
-    </form>
-  </mat-card-content>
-  <mat-card-actions>
-    <button class="settings-button" mat-raised-button color="primary">Отменить изменения</button>
-    <button class="settings-button" mat-raised-button color="primary">Сохранить</button>
-  </mat-card-actions> -->
 </mat-card>

@@ -28,6 +28,8 @@ export class AppComponent implements OnInit {
         res => {
           this.data = res;
           this.storage.writeRequest(res);
+          this.dataService.writeRequest(res);
+          this.dataService.writeUser(res.users[0]);
         },
         err => {
           this.router.navigate(['error']);
@@ -37,8 +39,8 @@ export class AppComponent implements OnInit {
       );
     } else {
       this.data = storageData;
+      this.dataService.writeRequest(this.data);
+      this.dataService.writeUser(this.data.users[0]);
     }
-    this.dataService.writeRequest(this.data);
-    this.dataService.writeUser(this.data.users[0]);
   }
 }
