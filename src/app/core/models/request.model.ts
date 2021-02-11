@@ -15,6 +15,7 @@ export interface IUserService {
   title: string;
   fee: number;
   isEnable: boolean;
+  date: number;
 }
 
 export interface IUser {
@@ -32,5 +33,5 @@ export interface IUserConverted {
 }
 
 export interface IServicesEnable {
-  [key: string]: number
+  [key: string]: number;
 }

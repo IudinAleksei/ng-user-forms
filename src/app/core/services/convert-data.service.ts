@@ -9,7 +9,11 @@ export class ConvertDataService {
   convertData({ users, services }: IRequest): IUserConverted[] {
     const convertedUsers: IUserConverted[] = users.map((user: IUser): IUserConverted => {
       const convUserServices = services.map((service) => (
-        { ...service, isEnable: user.enabledServices.includes(service.id) }
+        {
+          ...service,
+          isEnable: user.enabledServices.includes(service.id),
+          date: user.servicesEnableDates[service.id]
+        }
       ));
       return ({ ...user, enabledServices: convUserServices });
     });

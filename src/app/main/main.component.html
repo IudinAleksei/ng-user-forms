@@ -1,4 +1,4 @@
 <div class="main">
-  <app-user-list class="main__user-list" [users]="data.users" (selectUserEvent)="selectUser($event)"></app-user-list>
-  <app-service-list class="main__service-list" [data]="data" [user]="selectedUser"></app-service-list>
+  <app-user-list class="main__user-list" [users]="users" (selectUserEvent)="selectUser($event)"></app-user-list>
+  <app-service-list class="main__service-list" [user]="selectedUser"></app-service-list>
 </div>

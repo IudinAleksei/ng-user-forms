@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SessionStorageService } from '../core/services/session-storage.service';
-import { IUser, IRequest } from './../core/models/request.model';
+import { IUserConverted } from './../core/models/request.model';
 import { DataService } from '../core/services/data.service';
 
 @Component({
@@ -10,17 +10,17 @@ import { DataService } from '../core/services/data.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent implements OnInit {
-  data: IRequest;
-  selectedUser: IUser;
+  users: IUserConverted[];
+  selectedUser: IUserConverted;
 
   constructor(private storage: SessionStorageService, private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.data = this.dataService.readRequest();
+    this.users = this.dataService.readRequest();
     this.selectedUser = this.dataService.readUser();
   }
 
-  selectUser(user: IUser): void {
+  selectUser(user: IUserConverted): void {
     this.selectedUser = user;
     this.dataService.writeUser(user);
   }

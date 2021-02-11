@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IRequest } from './core/models/request.model';
+import { IRequest, IUserConverted } from './core/models/request.model';
 import { DataService } from './core/services/data.service';
 import { RequestService } from './core/services/request.service';
 import { SessionStorageService } from './core/services/session-storage.service';
@@ -19,31 +19,31 @@ export class AppComponent implements OnInit {
   constructor(
     private requestService: RequestService, private storage: SessionStorageService,
     private router: Router, private dataService: DataService,
-    private convertDataservice: ConvertDataService) { }
+    private convertDataservice: ConvertDataService
+  ) { }
 
   ngOnInit(): void {
-    const storageData: IRequest | null = this.storage.readRequest();
+    const storageData: IUserConverted[] | null = this.storage.readRequest();
 
     if (!storageData) {
       const request: Subscription = this.requestService.getUsersAndSettings()
         .subscribe(
-        res => {
-          this.data = res;
-          this.storage.writeRequest(res);
-          this.dataService.writeRequest(res);
-          this.dataService.writeUser(res.users[0]);
-          this.convertDataservice.convertData(res);
-        },
-        err => {
-          this.router.navigate(['error']);
-          console.warn('HTTP Error: ', err);
-        },
-        () => request.unsubscribe()
+          res => {
+            this.data = res;
+            const covertedUsers = this.convertDataservice.convertData(res);
+            this.storage.writeRequest(covertedUsers);
+            this.dataService.writeRequest(covertedUsers);
+            this.dataService.writeUser(covertedUsers[0]);
+          },
+          err => {
+            this.router.navigate(['error']);
+            console.warn('HTTP Error: ', err);
+          },
+          () => request.unsubscribe()
       );
     } else {
-      this.data = storageData;
-      this.dataService.writeRequest(this.data);
-      this.dataService.writeUser(this.data.users[0]);
+      this.dataService.writeRequest(storageData);
+      this.dataService.writeUser(storageData[0]);
     }
   }
 }

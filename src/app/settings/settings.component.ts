@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IUser } from '../core/models/request.model';
 import { DataService } from '../core/services/data.service';
+import { IUserConverted } from './../core/models/request.model';
 
 @Component({
   selector: 'app-settings',
@@ -10,7 +10,7 @@ import { DataService } from '../core/services/data.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent implements OnInit {
-  user: IUser;
+  user: IUserConverted;
   isEdited = false;
   settingsForm = new FormGroup({
     userName: new FormControl({value: '', disabled: true}, Validators.maxLength(200)),

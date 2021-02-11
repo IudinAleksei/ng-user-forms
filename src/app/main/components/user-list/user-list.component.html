@@ -3,10 +3,10 @@
     <mat-card-title>{{user.name}}</mat-card-title>
     <mat-card-content>
       <span>
-        Услуг: {{user.enabledServices.length}}
+        Услуг: {{user.enabledServices | enabledServices | calcServiceNumber}}
       </span>
       <span>
-        Абон.плата:
+        Абон.плата: {{user.enabledServices | enabledServices | calcPay}}&nbsp;руб
       </span>
     </mat-card-content>
   </mat-card>

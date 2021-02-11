@@ -1,28 +1,44 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { IUser, IRequest, IService } from './../../../core/models/request.model';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { EnabledServicesPipe } from '../../pipes/enabled-services.pipe';
+import { IUserConverted, IUserService } from './../../../core/models/request.model';
 
 @Component({
   selector: 'app-service-list',
   templateUrl: './service-list.component.html',
-  styleUrls: ['./service-list.component.scss']
+  styleUrls: ['./service-list.component.scss'],
+  providers: [EnabledServicesPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ServiceListComponent implements OnInit {
-  @Input() data: IRequest;
-  @Input() user: IUser;
-  services: IService[];
-  serviceForm = this.fb.group({
-    serviceName: [''],
-    clearButton: [''],
-    aliases: this.fb.array([
-      this.fb.control('')
-    ])
-  });
+export class ServiceListComponent implements OnInit, OnChanges {
+  @Input() user: IUserConverted;
+  enabledServices: IUserService[] = [];
+  disabledServices: IUserService[] = [];
 
-  constructor(private fb: FormBuilder) { }
+  serviceForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private enableServicePipe: EnabledServicesPipe) {  }
+
+  ngOnChanges(): void {
+    this.enabledServices = this.enableServicePipe.transform(this.user.enabledServices, true);
+    this.disabledServices = this.enableServicePipe.transform(this.user.enabledServices, false);
+
+    this.serviceForm = this.fb.group({
+      serviceName: [''],
+      // enabledServices: this.enabledServices
+      //   .reduce((acc, service) => ({ ...acc, [service.id]: this.fb.control(true)}), {}),
+      // disabledServices: this.disabledServices
+      //   .reduce((acc, service) => ({ ...acc, [service.id]: this.fb.control('true')}), {}),
+    });
+  }
 
   ngOnInit(): void {
-    this.services = this.data.services;
+  }
+
+  clearFind(): void {
+    this.serviceForm.patchValue({
+      serviceName: ''
+    });
   }
 
   onSubmit(): void {
@@ -30,11 +46,4 @@ export class ServiceListComponent implements OnInit {
     console.warn(this.serviceForm.value);
   }
 
-  get aliases(): FormArray {
-    return this.serviceForm.get('aliases') as FormArray;
-  }
-
-  addAlias(): void {
-    this.aliases.push(this.fb.control(''));
-  }
 }

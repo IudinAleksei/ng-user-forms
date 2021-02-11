@@ -1,11 +1,12 @@
 <mat-card>
   <form [formGroup]="settingsForm" (input)="formInput()">
-    <mat-form-field class="form-text-field">
+
+    <mat-form-field class="form-text-field" appearance="outline">
       <mat-label>ФИО</mat-label>
       <input matInput type="text" formControlName="userName">
     </mat-form-field>
 
-    <mat-form-field class="form-text-field">
+    <mat-form-field class="form-text-field" appearance="outline">
       <mat-label>Псевдоним</mat-label>
       <input matInput type="text" formControlName="psevdo">
       <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearPsevdo()" [disabled]="!settingsForm.value.psevdo">
@@ -17,29 +18,27 @@
       <mat-checkbox formControlName="enableNotification">Оповещения</mat-checkbox>
       <div class="notification-form__inputs">
 
-          <mat-form-field class="form-text-field">
+          <mat-form-field class="form-text-field" appearance="outline">
             <mat-label>Email</mat-label>
-            <mat-radio-button name="notification-select" value="1">
-              Email
-            </mat-radio-button>
+            <mat-radio-button name="notification-select" value="1"></mat-radio-button>
             <input matInput type="text" formControlName="email">
             <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearEmail($event)" [disabled]="!settingsForm.value.notification.email">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
 
-        <mat-form-field class="form-text-field">
-          <mat-radio-button name="notification-select" value="2">
-            Phone
-          </mat-radio-button>
+        <mat-form-field class="form-text-field" appearance="outline">
+          <mat-radio-button name="notification-select" value="2"></mat-radio-button>
           <mat-label>Телефон</mat-label>
           <input matInput type="text" formControlName="phone">
           <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearPhone($event)" [disabled]="!settingsForm.value.notification.phone">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
+
       </div>
     </form>
+
     <button class="settings-button" mat-raised-button color="primary" [disabled]="!isEdited">Отменить изменения</button>
     <button class="settings-button" mat-raised-button color="primary" [disabled]="!(settingsForm.valid && isEdited)">Сохранить</button>
   </form>
