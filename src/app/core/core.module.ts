@@ -1,9 +1,10 @@
-import { SessionStorageService } from './services/session-storage.service';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { RequestService } from './services/request.service';
 import { DataService } from './services/data.service';
+import { ConvertDataService } from './services/convert-data.service';
+import { SessionStorageService } from './services/session-storage.service';
 
 @NgModule({
   declarations: [],
@@ -13,7 +14,8 @@ import { DataService } from './services/data.service';
   providers: [
     RequestService,
     SessionStorageService,
-    DataService
+    DataService,
+    ConvertDataService
   ]
 })
 export class CoreModule { }

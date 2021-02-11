@@ -5,6 +5,7 @@ import { IRequest } from './core/models/request.model';
 import { DataService } from './core/services/data.service';
 import { RequestService } from './core/services/request.service';
 import { SessionStorageService } from './core/services/session-storage.service';
+import { ConvertDataService } from './core/services/convert-data.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private requestService: RequestService, private storage: SessionStorageService,
-    private router: Router, private dataService: DataService) { }
+    private router: Router, private dataService: DataService,
+    private convertDataservice: ConvertDataService) { }
 
   ngOnInit(): void {
     const storageData: IRequest | null = this.storage.readRequest();
@@ -30,6 +32,7 @@ export class AppComponent implements OnInit {
           this.storage.writeRequest(res);
           this.dataService.writeRequest(res);
           this.dataService.writeUser(res.users[0]);
+          this.convertDataservice.convertData(res);
         },
         err => {
           this.router.navigate(['error']);

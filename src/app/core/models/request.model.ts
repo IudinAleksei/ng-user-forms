@@ -10,10 +10,24 @@ export interface IService {
   fee: number;
 }
 
+export interface IUserService {
+  id: number;
+  title: string;
+  fee: number;
+  isEnable: boolean;
+}
+
 export interface IUser {
   id: number;
   name: string;
   enabledServices: number[];
+  servicesEnableDates: IServicesEnable;
+}
+
+export interface IUserConverted {
+  id: number;
+  name: string;
+  enabledServices: IUserService[];
   servicesEnableDates: IServicesEnable;
 }
 
