@@ -1,14 +1,17 @@
 .form-text-field {
 	display: block;
 }
+
 .notification-container {
 	display: flex;
 	width: 100%;
 }
+
 .notification-checkbox {
 	margin-right: 1rem;
 	margin-bottom: 1rem;
 }
+
 .notification-form {
 	display: flex;
 	justify-content: flex-start;
@@ -28,11 +31,21 @@
 		max-width: 300px;
 	}
 }
+
 .settings-button {
 	&:not(last-of-type) {
 		margin-right: 0.5rem;
 	}
 }
+
+.loader {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media(max-width: 799px) {
 	.settings-button {
 		&:not(first-of-type) {
@@ -40,6 +53,7 @@
 		}
 	}
 }
+
 @media(max-width: 639px) {
 	.notification-container {
 		flex-direction: column;
