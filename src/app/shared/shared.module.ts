@@ -15,6 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const angularModules = [
   CommonModule,
@@ -33,7 +34,8 @@ const materialModules = [
   MatDividerModule,
   MatRadioModule,
   MatCheckboxModule,
-  MatRippleModule
+  MatRippleModule,
+  MatProgressSpinnerModule
 ]
 @NgModule({
   declarations: [],

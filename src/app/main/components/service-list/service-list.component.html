@@ -15,17 +15,17 @@
         <mat-list-item *ngFor="let service of enabledServices | findService: serviceForm.value.serviceName">
           <div class="enabled-service">
             <div>
-              {{service.date | date: 'shortDate'}}&nbsp;{{service.title}}
+              {{service.date | rusDate}}&nbsp;{{service.title}}
             </div>
             <div>
               &nbsp;{{service.fee}}&nbsp;руб
-              <button mat-icon-button color="warn">
+              <button mat-icon-button color="warn" (click)="removeServiceHandler(service.id)">
                 <mat-icon>close</mat-icon>
               </button>
             </div>
           </div>
         </mat-list-item>
-        <div class="empty-message" *ngIf="!(enabledServices | findService: serviceForm.value.serviceName).length">нет подключенных услуг</div>
+        <div class="empty-message" *ngIf="!(enabledServices || [] | findService: serviceForm.value.serviceName).length">нет подключенных услуг</div>
       </mat-list>
     </mat-card-content>
 
@@ -34,9 +34,9 @@
     <mat-card-content>
       <mat-selection-list>
         <mat-list-option checkboxPosition="before" *ngFor="let service of disabledServices | findService: serviceForm.value.serviceName">
-          {{service.date}}&nbsp;{{service.title}}&nbsp;{{service.fee}}&nbsp;руб
+          {{service.title}}&nbsp;{{service.fee}}&nbsp;руб
         </mat-list-option>
-        <div class="empty-message" *ngIf="!(disabledServices | findService: serviceForm.value.serviceName).length">нет услуг для подключения</div>
+        <div class="empty-message" *ngIf="!(disabledServices || [] | findService: serviceForm.value.serviceName).length">нет услуг для подключения</div>
       </mat-selection-list>
     </mat-card-content>
 

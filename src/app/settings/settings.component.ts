@@ -10,7 +10,7 @@ import { IUserConverted } from './../core/models/request.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent implements OnInit {
-  user: IUserConverted;
+  userId = 1;
   isEdited = false;
   isNotifacationDisabled = true;
   settingsForm = new FormGroup({
@@ -28,10 +28,10 @@ export class SettingsComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.user = this.dataService.readUser();
+    this.userId = this.dataService.readUser();
     this.settingsForm.patchValue({
-      userName: this.user.name,
-      psevdo: this.user.name
+      // userName: this.user.name,
+      // psevdo: this.user.name
     });
     this.settingsForm.controls.notification.disable();
 
@@ -65,9 +65,10 @@ export class SettingsComponent implements OnInit {
   }
 
   setDefault(): void {
+    this.isEdited = false;
     this.settingsForm.reset({
-      userName: this.user.name,
-      psevdo: this.user.name,
+      // userName: this.user.name,
+      // psevdo: this.user.name,
       enableNotification: false,
       notification: {
         emailOrPhone: 'email',
@@ -88,16 +89,19 @@ export class SettingsComponent implements OnInit {
   }
 
   clearPsevdo(): void {
+    this.isEdited = true;
     this.settingsForm.patchValue({ psevdo: '' });
   }
 
   clearPhone(): void {
+    this.isEdited = true;
     this.settingsForm.patchValue({
       notification: { phone: '' }
     });
   }
 
   clearEmail(): void {
+    this.isEdited = true;
     this.settingsForm.patchValue({
       notification: { email: ''}
     });

@@ -1,35 +1,42 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
-import { EnabledServicesPipe } from '../../pipes/enabled-services.pipe';
-import { IUserConverted, IUserService } from './../../../core/models/request.model';
+import { ConvertDataService } from './../../../core/services/convert-data.service';
+import { FilterServicePipe } from './../../pipes/filter-service.pipe';
+import { IUser, IService, IUserService } from './../../../core/models/request.model';
 
 @Component({
   selector: 'app-service-list',
   templateUrl: './service-list.component.html',
   styleUrls: ['./service-list.component.scss'],
-  providers: [EnabledServicesPipe],
+  providers: [
+
+    FilterServicePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServiceListComponent implements OnInit, OnChanges {
-  @Input() user: IUserConverted;
-  enabledServices: IUserService[] = [];
-  disabledServices: IUserService[] = [];
+  @Input() user: IUser;
+  @Input() services: IService[];
+  enabledServices: IUserService[];
+  disabledServices: IUserService[];
 
-  serviceForm: FormGroup;
+  serviceForm: FormGroup = this.fb.group({
+    serviceName: ['']
+  });
 
-  constructor(private fb: FormBuilder, private enableServicePipe: EnabledServicesPipe) {  }
+  constructor(
+    private fb: FormBuilder, private filterService: FilterServicePipe,
+    private convertService: ConvertDataService
+  ) { }
 
-  ngOnChanges(): void {
-    this.enabledServices = this.enableServicePipe.transform(this.user.enabledServices, true);
-    this.disabledServices = this.enableServicePipe.transform(this.user.enabledServices, false);
+  ngOnChanges(): void | undefined {
+    if (!this.user || !this.services) {
+      return;
+    }
 
-    this.serviceForm = this.fb.group({
-      serviceName: [''],
-      // enabledServices: this.enabledServices
-      //   .reduce((acc, service) => ({ ...acc, [service.id]: this.fb.control(true)}), {}),
-      // disabledServices: this.disabledServices
-      //   .reduce((acc, service) => ({ ...acc, [service.id]: this.fb.control('true')}), {}),
-    });
+    const convertedServices = this.convertService.convertData(this.user, this.services);
+
+    this.enabledServices = this.filterService.transform(convertedServices, true);
+    this.disabledServices = this.filterService.transform(convertedServices, false);
   }
 
   ngOnInit(): void {
@@ -39,6 +46,10 @@ export class ServiceListComponent implements OnInit, OnChanges {
     this.serviceForm.patchValue({
       serviceName: ''
     });
+  }
+
+  removeServiceHandler(id: number): void {
+    console.log(id);
   }
 
   onSubmit(): void {

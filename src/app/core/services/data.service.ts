@@ -4,7 +4,7 @@ import { IUserConverted } from './../models/request.model';
 @Injectable()
 export class DataService {
   private cachedRequest: IUserConverted[];
-  private selectedUser: IUserConverted;
+  private selectedUser = 1;
 
   constructor() { }
 
@@ -16,11 +16,11 @@ export class DataService {
     return this.cachedRequest;
   }
 
-  writeUser(user: IUserConverted): void {
+  writeUser(user: number): void {
     this.selectedUser = user;
   }
 
-  readUser(): IUserConverted {
+  readUser(): number {
     return this.selectedUser;
   }
 }

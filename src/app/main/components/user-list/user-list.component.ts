@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IUserConverted } from './../../../core/models/request.model';
+import { IUser, IUserService } from './../../../core/models/request.model';
 
 @Component({
   selector: 'app-user-list',
@@ -8,15 +8,15 @@ import { IUserConverted } from './../../../core/models/request.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserListComponent implements OnInit {
-  @Input() users: IUserConverted[];
-  @Output() selectUserEvent = new EventEmitter<IUserConverted>();
+  @Input() users: IUser[];
+  @Output() selectUserEvent = new EventEmitter<IUser>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  userClickHandler(user: IUserConverted): void {
+  userClickHandler(user: IUser): void {
     this.selectUserEvent.emit(user);
   }
 }

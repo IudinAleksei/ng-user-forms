@@ -17,7 +17,7 @@
     <div class="notification-container">
       <mat-checkbox class="notification-checkbox" formControlName="enableNotification" (change)="checkboxHandler()">Оповещения</mat-checkbox>
 
-      <form class="notification-form" action="" formGroupName="notification">
+      <form class="notification-form" *ngIf="settingsForm.value.enableNotification" action="" formGroupName="notification">
 
         <mat-radio-group class="notification-form__radio" formControlName="emailOrPhone" (change)="radioBtnHandler()">
           <mat-radio-button  value="email"></mat-radio-button>

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backend_url: 'https://iudin.herokuapp.com/forms',
+  backend_url: 'http://localhost:3000',
 };
 
 /*

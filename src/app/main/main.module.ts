@@ -7,8 +7,9 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { ServiceListComponent } from './components/service-list/service-list.component';
 import { CalcServiceNumberPipe } from './pipes/calc-service-number.pipe';
 import { CalcPayPipe } from './pipes/calc-pay.pipe';
-import { EnabledServicesPipe } from './pipes/enabled-services.pipe';
 import { FindServicePipe } from './pipes/find-service.pipe';
+import { FilterServicePipe } from './pipes/filter-service.pipe';
+import { RusDatePipe } from './pipes/rus-date.pipe';
 
 
 @NgModule({
@@ -18,8 +19,9 @@ import { FindServicePipe } from './pipes/find-service.pipe';
     ServiceListComponent,
     CalcServiceNumberPipe,
     CalcPayPipe,
-    EnabledServicesPipe,
-    FindServicePipe
+    FindServicePipe,
+    FilterServicePipe,
+    RusDatePipe
   ],
   imports: [
     SharedModule,
