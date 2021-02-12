@@ -64,6 +64,25 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  setDefault(): void {
+    this.settingsForm.reset({
+      userName: this.user.name,
+      psevdo: this.user.name,
+      enableNotification: false,
+      notification: {
+        emailOrPhone: 'email',
+        email: 'mail@mail.com',
+        phone: '89000000000',
+      }
+    });
+
+    this.settingsForm.controls.notification.disable();
+  }
+
+  submitForm(): void {
+    console.log('submit');
+  }
+
   formInput(): void {
     this.isEdited = true;
   }

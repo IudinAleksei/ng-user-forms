@@ -1,5 +1,5 @@
 <mat-card>
-  <form [formGroup]="settingsForm" (input)="formInput()">
+  <form [formGroup]="settingsForm" (input)="formInput()" (ngSubmit)="submitForm()">
 
     <mat-form-field class="form-text-field" appearance="outline">
       <mat-label>ФИО</mat-label>
@@ -46,7 +46,7 @@
       </form>
     </div>
 
-    <button class="settings-button" mat-raised-button color="primary" [disabled]="!isEdited">Отменить изменения</button>
+    <button type="button" class="settings-button" mat-raised-button color="primary" [disabled]="!isEdited" (click)="setDefault()">Отменить изменения</button>
     <button type="submit" class="settings-button" mat-raised-button color="primary" [disabled]="!(settingsForm.valid && isEdited)">Сохранить</button>
   </form>
 
