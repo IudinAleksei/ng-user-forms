@@ -8,42 +8,46 @@
 
     <mat-form-field class="form-text-field" appearance="outline">
       <mat-label>Псевдоним</mat-label>
-      <input matInput type="text" formControlName="psevdo">
+      <input matInput type="text" formControlName="psevdo" autocomplete='off'>
       <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearPsevdo()" [disabled]="!settingsForm.value.psevdo">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
 
-    <form class="notification-form" formGroupName="notification">
-      <mat-checkbox formControlName="enableNotification">Оповещения</mat-checkbox>
-      <div class="notification-form__inputs">
+    <div class="notification-container">
+      <mat-checkbox class="notification-checkbox" formControlName="enableNotification" (change)="checkboxHandler()">Оповещения</mat-checkbox>
+
+      <form class="notification-form" action="" formGroupName="notification">
+
+        <mat-radio-group class="notification-form__radio" formControlName="emailOrPhone" (change)="radioBtnHandler()">
+          <mat-radio-button  value="email"></mat-radio-button>
+          <mat-radio-button value="phone"></mat-radio-button>
+        </mat-radio-group>
+
+        <div class="notification-form__inputs">
 
           <mat-form-field class="form-text-field" appearance="outline">
             <mat-label>Email</mat-label>
-            <mat-radio-button name="notification-select" value="1"></mat-radio-button>
             <input matInput type="text" formControlName="email">
-            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearEmail($event)" [disabled]="!settingsForm.value.notification.email">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearEmail()" [disabled]="notGroupControl.email.disabled || !notGroupControl.email.value">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
 
-        <mat-form-field class="form-text-field" appearance="outline">
-          <mat-radio-button name="notification-select" value="2"></mat-radio-button>
-          <mat-label>Телефон</mat-label>
-          <input matInput type="text" formControlName="phone">
-          <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearPhone($event)" [disabled]="!settingsForm.value.notification.phone">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
+          <mat-form-field class="form-text-field" appearance="outline">
+            <mat-label>Телефон</mat-label>
+            <input matInput type="text" formControlName="phone">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearPhone()" [disabled]="notGroupControl.phone.disabled || !notGroupControl.phone.value">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
 
-      </div>
-    </form>
+        </div>
+      </form>
+    </div>
 
     <button class="settings-button" mat-raised-button color="primary" [disabled]="!isEdited">Отменить изменения</button>
-    <button class="settings-button" mat-raised-button color="primary" [disabled]="!(settingsForm.valid && isEdited)">Сохранить</button>
+    <button type="submit" class="settings-button" mat-raised-button color="primary" [disabled]="!(settingsForm.valid && isEdited)">Сохранить</button>
   </form>
 
-  <p>
-    {{settingsForm.status}}
-  </p>
 </mat-card>

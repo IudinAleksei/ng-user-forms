@@ -12,19 +12,18 @@ import { IUserConverted } from './../core/models/request.model';
 export class SettingsComponent implements OnInit {
   user: IUserConverted;
   isEdited = false;
+  isNotifacationDisabled = true;
   settingsForm = new FormGroup({
-    userName: new FormControl({value: '', disabled: true}, Validators.maxLength(200)),
-    psevdo: new FormControl('', Validators.maxLength(200)),
+    userName: new FormControl({value: '', disabled: true}, [Validators.maxLength(200)]),
+    psevdo: new FormControl('', [Validators.maxLength(200)]),
+    enableNotification: new FormControl(false),
     notification: new FormGroup({
-      enableNotification: new FormControl(false),
-      enableEmail: new FormControl({value: 'email', checked: true}),
-      email: new FormControl('mail@mail.com'),
-      enablePhone: new FormControl({value: 'phone', checked: false}),
-      phone: new FormControl('89000000000')
-    }),
-    discard: new FormControl(),
-    save: new FormControl()
+      emailOrPhone: new FormControl('email'),
+      email: new FormControl('mail@mail.com', [Validators.maxLength(200), Validators.email]),
+      phone: new FormControl({value: '89000000000', disabled: true}, [Validators.maxLength(11), Validators.pattern(/^89\d*$/)])
+    })
   });
+  notGroupControl = (this.settingsForm.controls.notification as FormGroup).controls;
 
   constructor(private dataService: DataService) { }
 
@@ -32,8 +31,37 @@ export class SettingsComponent implements OnInit {
     this.user = this.dataService.readUser();
     this.settingsForm.patchValue({
       userName: this.user.name,
-      psevdo: this.user.name,
+      psevdo: this.user.name
     });
+    this.settingsForm.controls.notification.disable();
+
+    this.settingsForm.valueChanges.subscribe(({ enableNotification }) => {
+      this.isNotifacationDisabled = !enableNotification;
+    });
+  }
+
+  checkboxHandler(): void {
+    const notControl = this.settingsForm.controls.notification;
+    if (this.settingsForm.value.enableNotification) {
+      notControl.enable();
+      notControl.reset({
+        emailOrPhone: 'email',
+        email: 'mail@mail.com',
+        phone: {value: '89000000000', disabled: true}
+      });
+    } else {
+      notControl.disable();
+    }
+  }
+
+  radioBtnHandler(): void {
+    if (this.settingsForm.value.notification.emailOrPhone === 'email') {
+      this.notGroupControl.email.enable();
+      this.notGroupControl.phone.disable();
+    } else {
+      this.notGroupControl.email.disable();
+      this.notGroupControl.phone.enable();
+    }
   }
 
   formInput(): void {
@@ -41,26 +69,18 @@ export class SettingsComponent implements OnInit {
   }
 
   clearPsevdo(): void {
+    this.settingsForm.patchValue({ psevdo: '' });
+  }
+
+  clearPhone(): void {
     this.settingsForm.patchValue({
-      psevdo: '',
+      notification: { phone: '' }
     });
   }
 
-  clearPhone(event: Event): void {
-    event.preventDefault();
+  clearEmail(): void {
     this.settingsForm.patchValue({
-      notification: {
-        phone: ''
-      },
-    });
-  }
-
-  clearEmail(event: Event): void {
-    event.preventDefault();
-    this.settingsForm.patchValue({
-      notification: {
-        email: ''
-      },
+      notification: { email: ''}
     });
   }
 }
