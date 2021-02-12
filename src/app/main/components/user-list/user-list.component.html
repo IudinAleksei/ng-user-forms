@@ -1,13 +1,13 @@
 <div class="user-list">
-  <mat-card matRipple matRippleCentered="true" class="user-list__item" *ngFor="let user of users" (click)="userClickHandler(user)">
+  <mat-card matRipple matRippleCentered="true" class="user-item" *ngFor="let user of users" (click)="userClickHandler(user)">
     <mat-card-title>{{user.name}}</mat-card-title>
-    <mat-card-content>
-      <span>
+    <mat-card-content class="user-item__services">
+      <div>
         Услуг: {{user.enabledServices | calcServiceNumber}}
-      </span>
-      <span>
-        Абон.плата: {{user.enabledServices}}&nbsp;руб
-      </span>
+      </div>
+      <div>
+        Абон.плата: {{user.enabledServices | calcPay: services}}&nbsp;руб
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

@@ -18,7 +18,8 @@ export class MainComponent implements OnInit, OnChanges {
 
   constructor(
     private requestService: RequestService, private dataService: DataService,
-    private router: Router, private cdr: ChangeDetectorRef) { }
+    private router: Router, private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnChanges(): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
@@ -27,7 +28,6 @@ export class MainComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log('init  main');
     const requestUsers: Subscription = this.requestService.getAllUsers()
         .subscribe(
           res => {
@@ -59,6 +59,6 @@ export class MainComponent implements OnInit, OnChanges {
   selectUser(user: IUser): void {
     this.selectedUser = user;
     this.cdr.detectChanges();
-    // this.dataService.writeUser(user.id);
+    this.dataService.writeUser(user.id);
   }
 }

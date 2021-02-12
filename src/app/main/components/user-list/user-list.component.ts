@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IUser, IUserService } from './../../../core/models/request.model';
+import { IService, IUser, IUserService } from './../../../core/models/request.model';
 
 @Component({
   selector: 'app-user-list',
@@ -9,6 +9,7 @@ import { IUser, IUserService } from './../../../core/models/request.model';
 })
 export class UserListComponent implements OnInit {
   @Input() users: IUser[];
+  @Input() services: IService[];
   @Output() selectUserEvent = new EventEmitter<IUser>();
 
   constructor() { }

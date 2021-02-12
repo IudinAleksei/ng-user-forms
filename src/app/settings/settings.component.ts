@@ -1,7 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { IUser } from '../core/models/request.model';
 import { DataService } from '../core/services/data.service';
-import { IUserConverted } from './../core/models/request.model';
+import { RequestService } from '../core/services/request.service';
 
 @Component({
   selector: 'app-settings',
@@ -9,8 +12,10 @@ import { IUserConverted } from './../core/models/request.model';
   styleUrls: ['./settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class SettingsComponent implements OnInit {
   userId = 1;
+  user: IUser;
   isEdited = false;
   isNotifacationDisabled = true;
   settingsForm = new FormGroup({
@@ -25,14 +30,34 @@ export class SettingsComponent implements OnInit {
   });
   notGroupControl = (this.settingsForm.controls.notification as FormGroup).controls;
 
-  constructor(private dataService: DataService) { }
+  constructor(
+    private requestService: RequestService, private dataService: DataService,
+    private router: Router, private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.userId = this.dataService.readUser();
-    this.settingsForm.patchValue({
-      // userName: this.user.name,
-      // psevdo: this.user.name
-    });
+
+    const requestUser: Subscription = this.requestService.getUser(this.userId)
+        .subscribe(
+          res => {
+            this.user = res;
+
+            this.settingsForm.patchValue({
+              userName: this.user.name,
+              psevdo: this.user.name
+            });
+
+            this.cdr.detectChanges();
+          },
+          err => {
+            this.router.navigate(['error']);
+            console.warn('HTTP Error: ', err);
+          },
+          () => requestUser.unsubscribe()
+    );
+
+
     this.settingsForm.controls.notification.disable();
 
     this.settingsForm.valueChanges.subscribe(({ enableNotification }) => {
@@ -67,8 +92,8 @@ export class SettingsComponent implements OnInit {
   setDefault(): void {
     this.isEdited = false;
     this.settingsForm.reset({
-      // userName: this.user.name,
-      // psevdo: this.user.name,
+      userName: this.user.name,
+      psevdo: this.user.name,
       enableNotification: false,
       notification: {
         emailOrPhone: 'email',

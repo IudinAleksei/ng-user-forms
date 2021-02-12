@@ -1,13 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IUserService } from 'src/app/core/models/request.model';
+import { IService } from 'src/app/core/models/request.model';
 
 @Pipe({
   name: 'calcPay'
 })
 export class CalcPayPipe implements PipeTransform {
 
-  transform(services: IUserService[]): number {
-    const pay = services.reduce((acc: number, service: IUserService): number => acc += service.fee, 0);
+  transform(enabledServices: number[] = [], services: IService[] = []): number {
+    const pay = services.reduce(
+      (acc: number, service: IService): number => (enabledServices.includes(service.id)) ? acc += service.fee : acc, 0);
     return pay;
   }
 

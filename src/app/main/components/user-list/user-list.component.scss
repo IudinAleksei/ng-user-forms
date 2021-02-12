@@ -1,9 +1,14 @@
 .user-list {
   height: 100%;
+}
 
-  &__item {
-    height: 80px;
-    cursor: pointer;
-    margin-bottom: 1rem;
-  }
+.user-item {
+  height: 80px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.user-item__services {
+  display: flex;
+  justify-content: space-between;
 }
