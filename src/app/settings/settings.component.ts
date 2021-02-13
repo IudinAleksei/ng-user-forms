@@ -106,7 +106,9 @@ export class SettingsComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log('submit');
+    console.log(this.settingsForm.value);
+    this.requestService.setSettings(this.settingsForm.value)
+    .subscribe((val) => console.log('response: ', val))
   }
 
   formInput(): void {

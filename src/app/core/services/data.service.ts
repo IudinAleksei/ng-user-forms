@@ -9,11 +9,9 @@ export class DataService {
 
   writeUser(user: number): void {
     this.selectedUser = user;
-    console.log('write: ', user);
   }
 
   readUser(): number {
-    console.log('read: ', this.selectedUser);
     return this.selectedUser;
   }
 }
