@@ -18,6 +18,7 @@ export class ServiceListComponent implements OnInit, OnChanges {
   @Output() changeUserServices = new EventEmitter<void>();
   enabledServices: IUserService[];
   disabledServices: IUserService[];
+  isChanged = false;
 
   serviceForm: FormGroup = this.fb.group({
     filterServices: [''],
@@ -43,6 +44,8 @@ export class ServiceListComponent implements OnInit, OnChanges {
     this.serviceForm.controls.disabled = this.fb.group({});
     this.disabledServices.forEach(service => (
       this.serviceForm.controls.disabled as FormGroup).addControl(`${service.id}`, this.fb.control(false)));
+    this.serviceForm.controls.disabled.valueChanges
+      .subscribe(() => this.isChanged = true);
 
   }
 
@@ -79,7 +82,10 @@ export class ServiceListComponent implements OnInit, OnChanges {
     addedServices.forEach(id => updatedUser.servicesEnableDates[id] = Date.now());
 
     this.requestService.updateUser(this.user.id, updatedUser)
-      .subscribe(() => this.serviceClickHandler());
+      .subscribe(() => {
+        this.isChanged = false;
+        this.serviceClickHandler();
+      });
   }
 
 }
