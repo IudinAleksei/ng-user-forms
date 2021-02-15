@@ -43,20 +43,28 @@ export class RequestService {
       );
   }
 
+  getSettings(id: number): Observable<ISettings> {
+    return this.getRequest(`/settings/${id}`);
+  }
+
   setSettings(body: ISettings): Observable<ISettings> {
     return this.postRequest(`/settings`, body);
+  }
+
+  updateSettings(id: number, body: ISettings): Observable<ISettings> {
+    return this.patchRequest(`/settings/${id}`, body);
   }
 
   getUser(id: number): Observable<IUser> {
     return this.getRequest(`/users/${id}`);
   }
 
-  getAllUsers(): Observable<IUser[]> {
-    return this.getRequest(`/users`);
+  updateUser(id: number, body: IUser): Observable<IUser> {
+    return this.patchRequest(`/users/${id}`, body);
   }
 
-  getUserSettings(id: number): Observable<ISettings> {
-    return this.getRequest(`/settings/${id}`);
+  getAllUsers(): Observable<IUser[]> {
+    return this.getRequest(`/users`);
   }
 
   getServices(): Observable<IService[]> {
