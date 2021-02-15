@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IUser, IService } from './../core/models/request.model';
@@ -11,7 +11,7 @@ import { RequestService } from '../core/services/request.service';
   styleUrls: ['./main.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainComponent implements OnInit, OnChanges {
+export class MainComponent implements OnInit {
   users: IUser[];
   selectedUser: IUser;
   services: IService[];
@@ -21,26 +21,8 @@ export class MainComponent implements OnInit, OnChanges {
     private router: Router, private cdr: ChangeDetectorRef
   ) { }
 
-  ngOnChanges(): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
-    console.log('change main');
-  }
-
   ngOnInit(): void {
-    const requestUsers: Subscription = this.requestService.getAllUsers()
-        .subscribe(
-          res => {
-            this.users = res;
-            this.selectedUser = this.users[0];
-            this.cdr.detectChanges();
-          },
-          err => {
-            this.router.navigate(['error']);
-            console.warn('HTTP Error: ', err);
-          },
-          () => requestUsers.unsubscribe()
-    );
+    this.getUsers();
 
     const requestServices: Subscription = this.requestService.getServices()
         .subscribe(
@@ -60,5 +42,25 @@ export class MainComponent implements OnInit, OnChanges {
     this.selectedUser = user;
     this.cdr.detectChanges();
     this.dataService.writeUser(user.id);
+  }
+
+  getUsers(): void {
+    const requestUsers: Subscription = this.requestService.getAllUsers()
+        .subscribe(
+          res => {
+            this.users = res;
+            this.selectedUser = this.users[0];
+            this.cdr.detectChanges();
+          },
+          err => {
+            this.router.navigate(['error']);
+            console.warn('HTTP Error: ', err);
+          },
+          () => requestUsers.unsubscribe()
+    );
+  }
+
+  updateServices(): void {
+    this.getUsers();
   }
 }

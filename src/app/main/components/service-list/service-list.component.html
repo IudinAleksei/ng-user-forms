@@ -1,5 +1,5 @@
 <mat-card class="service-list">
-  <form [formGroup]="serviceForm" (input)="onSubmit()">
+  <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
 
     <mat-form-field class="find-service" appearance="outline">
       <mat-label>Найти услугу</mat-label>
@@ -41,7 +41,7 @@
     </mat-card-content>
 
     <mat-card-actions class="services-actions">
-      <button mat-raised-button color="primary">Подключить услуги</button>
+      <button type="submit" mat-raised-button color="primary">Подключить услуги</button>
     </mat-card-actions>
 
   </form>

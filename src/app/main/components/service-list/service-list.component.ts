@@ -1,21 +1,21 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ConvertDataService } from './../../../core/services/convert-data.service';
 import { FilterServicePipe } from './../../pipes/filter-service.pipe';
 import { IUser, IService, IUserService } from './../../../core/models/request.model';
+import { RequestService } from 'src/app/core/services/request.service';
 
 @Component({
   selector: 'app-service-list',
   templateUrl: './service-list.component.html',
   styleUrls: ['./service-list.component.scss'],
-  providers: [
-
-    FilterServicePipe],
+  providers: [FilterServicePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServiceListComponent implements OnInit, OnChanges {
   @Input() user: IUser;
   @Input() services: IService[];
+  @Output() changeUserServices = new EventEmitter<void>();
   enabledServices: IUserService[];
   disabledServices: IUserService[];
 
@@ -25,7 +25,7 @@ export class ServiceListComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder, private filterService: FilterServicePipe,
-    private convertService: ConvertDataService
+    private convertService: ConvertDataService, private requestService: RequestService
   ) { }
 
   ngOnChanges(): void | undefined {
@@ -48,8 +48,16 @@ export class ServiceListComponent implements OnInit, OnChanges {
     });
   }
 
+  serviceClickHandler(): void {
+    this.changeUserServices.emit();
+  }
+
   removeServiceHandler(id: number): void {
-    console.log(id);
+    const updatedServices = this.user.enabledServices.filter((serviceId) => serviceId !== id);
+    const updatedUser = { ...this.user, enabledServices: updatedServices };
+    delete updatedUser.servicesEnableDates[id];
+    this.requestService.updateUser(this.user.id, updatedUser)
+      .subscribe(() => this.serviceClickHandler());
   }
 
   onSubmit(): void {

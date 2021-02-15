@@ -1,6 +1,6 @@
 <div class="main" *ngIf="(users || []).length; else loader">
   <app-user-list class="main__user-list" [users]="users" [services]="services" (selectUserEvent)="selectUser($event)"></app-user-list>
-  <app-service-list class="main__service-list" [user]="selectedUser" [services]="services"></app-service-list>
+  <app-service-list class="main__service-list" [user]="selectedUser" [services]="services" (changeUserServices)="updateServices()"></app-service-list>
 </div>
 
 <ng-template #loader>
