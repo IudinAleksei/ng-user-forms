@@ -13,6 +13,29 @@
   align-items: center;
 }
 
+.disabled-service__title {
+  padding: 0 10px;
+  flex-grow: 1;
+}
+
+.enabled-service__date-title {
+  flex-grow: 1;
+  flex-shrink: 1;
+
+}
+
+.enabled-service__fee-button {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.disabled-service {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .find-service {
   width: 100%;
 }

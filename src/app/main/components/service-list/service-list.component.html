@@ -3,41 +3,45 @@
 
     <mat-form-field class="find-service" appearance="outline">
       <mat-label>Найти услугу</mat-label>
-      <input matInput placeholder="Введите название" autocomplete="off" type="text" formControlName="serviceName">
-      <button mat-button matSuffix mat-icon-button type="submit" [disabled]="!serviceForm.value.serviceName" (click)="clearFind()">
+      <input matInput placeholder="Введите название" autocomplete="off" type="text" formControlName="filterServices">
+      <button mat-button matSuffix mat-icon-button type="submit" [disabled]="!serviceForm.value.filterServices" (click)="clearFind()">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
 
     <mat-card-title>Подключенные услуги</mat-card-title>
     <mat-card-content>
-      <mat-list>
-        <mat-list-item *ngFor="let service of enabledServices | findService: serviceForm.value.serviceName">
+      <mat-list formGroupName="enabled">
+        <mat-list-item *ngFor="let service of enabledServices | findService: serviceForm.value.filterServices">
           <div class="enabled-service">
-            <div>
+            <div class="enabled-service__date-title">
               {{service.date | rusDate}}&nbsp;{{service.title}}
             </div>
-            <div>
+            <div class="enabled-service__fee-button">
               &nbsp;{{service.fee}}&nbsp;руб
-              <button mat-icon-button color="warn" (click)="removeServiceHandler(service.id)">
+              <button type="button" mat-icon-button color="warn" (click)="removeServiceHandler(service.id)">
                 <mat-icon>close</mat-icon>
               </button>
             </div>
           </div>
         </mat-list-item>
-        <div class="empty-message" *ngIf="!(enabledServices || [] | findService: serviceForm.value.serviceName).length">нет подключенных услуг</div>
+        <div class="empty-message" *ngIf="!(enabledServices || [] | findService: serviceForm.value.filterServices).length">нет подключенных услуг</div>
       </mat-list>
     </mat-card-content>
 
     <mat-card-title>Доступные услуги</mat-card-title>
     <mat-divider></mat-divider>
     <mat-card-content>
-      <mat-selection-list>
-        <mat-list-option checkboxPosition="before" *ngFor="let service of disabledServices | findService: serviceForm.value.serviceName">
-          {{service.title}}&nbsp;{{service.fee}}&nbsp;руб
-        </mat-list-option>
-        <div class="empty-message" *ngIf="!(disabledServices || [] | findService: serviceForm.value.serviceName).length">нет услуг для подключения</div>
-      </mat-selection-list>
+      <mat-list formGroupName="disabled">
+        <mat-list-item  *ngFor="let service of disabledServices | findService: serviceForm.value.filterServices">
+          <div class="disabled-service">
+            <mat-checkbox [formControlName]="service.id"></mat-checkbox>
+            <div class="disabled-service__title">{{service.title}}</div>
+            <div>{{service.fee}}&nbsp;руб</div>
+          </div>
+        </mat-list-item>
+        <div class="empty-message" *ngIf="!(disabledServices || [] | findService: serviceForm.value.filterServices).length">нет услуг для подключения</div>
+      </mat-list>
     </mat-card-content>
 
     <mat-card-actions class="services-actions">

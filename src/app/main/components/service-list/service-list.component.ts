@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConvertDataService } from './../../../core/services/convert-data.service';
 import { FilterServicePipe } from './../../pipes/filter-service.pipe';
 import { IUser, IService, IUserService } from './../../../core/models/request.model';
-import { RequestService } from 'src/app/core/services/request.service';
+import { RequestService } from './../../../core/services/request.service';
 
 @Component({
   selector: 'app-service-list',
@@ -20,7 +20,9 @@ export class ServiceListComponent implements OnInit, OnChanges {
   disabledServices: IUserService[];
 
   serviceForm: FormGroup = this.fb.group({
-    serviceName: ['']
+    filterServices: [''],
+    enabled: [],
+    disabled: []
   });
 
   constructor(
@@ -37,6 +39,11 @@ export class ServiceListComponent implements OnInit, OnChanges {
 
     this.enabledServices = this.filterService.transform(convertedServices, true);
     this.disabledServices = this.filterService.transform(convertedServices, false);
+
+    this.serviceForm.controls.disabled = this.fb.group({});
+    this.disabledServices.forEach(service => (
+      this.serviceForm.controls.disabled as FormGroup).addControl(`${service.id}`, this.fb.control(false)));
+
   }
 
   ngOnInit(): void {
@@ -44,7 +51,7 @@ export class ServiceListComponent implements OnInit, OnChanges {
 
   clearFind(): void {
     this.serviceForm.patchValue({
-      serviceName: ''
+      filterServices: ''
     });
   }
 
@@ -56,13 +63,23 @@ export class ServiceListComponent implements OnInit, OnChanges {
     const updatedServices = this.user.enabledServices.filter((serviceId) => serviceId !== id);
     const updatedUser = { ...this.user, enabledServices: updatedServices };
     delete updatedUser.servicesEnableDates[id];
+
     this.requestService.updateUser(this.user.id, updatedUser)
       .subscribe(() => this.serviceClickHandler());
   }
 
   onSubmit(): void {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.serviceForm.value);
+    const settingsObj = this.serviceForm.controls.disabled.value;
+    const addedServices = Object.entries(settingsObj).reduce((acc, [key, value]) => value ? acc.concat([+key]) : acc, []);
+    const updatedUser = {
+      ...this.user,
+      enabledServices: this.user.enabledServices.concat(addedServices),
+    };
+
+    addedServices.forEach(id => updatedUser.servicesEnableDates[id] = Date.now());
+
+    this.requestService.updateUser(this.user.id, updatedUser)
+      .subscribe(() => this.serviceClickHandler());
   }
 
 }
