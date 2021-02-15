@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { IUserConverted } from './../models/request.model';
 
 @Injectable()
 export class DataService {

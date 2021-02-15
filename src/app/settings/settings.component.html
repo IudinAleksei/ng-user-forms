@@ -19,7 +19,7 @@
 
       <form class="notification-form" *ngIf="settingsForm.value.enableNotification" action="" formGroupName="notification">
 
-        <mat-radio-group class="notification-form__radio" formControlName="emailOrPhone" (change)="radioBtnHandler()">
+        <mat-radio-group class="notification-form__radio" formControlName="type" (change)="radioBtnHandler()">
           <mat-radio-button  value="email"></mat-radio-button>
           <mat-radio-button value="phone"></mat-radio-button>
         </mat-radio-group>

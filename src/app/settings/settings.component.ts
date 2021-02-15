@@ -23,7 +23,7 @@ export class SettingsComponent implements OnInit {
     psevdo: new FormControl('', [Validators.maxLength(200)]),
     enableNotification: new FormControl(false),
     notification: new FormGroup({
-      emailOrPhone: new FormControl('email'),
+      type: new FormControl('email'),
       email: new FormControl('mail@mail.com', [Validators.maxLength(200), Validators.email]),
       phone: new FormControl({value: '89000000000', disabled: true}, [Validators.maxLength(11), Validators.pattern(/^89\d*$/)])
     })
@@ -70,7 +70,7 @@ export class SettingsComponent implements OnInit {
     if (this.settingsForm.value.enableNotification) {
       notControl.enable();
       notControl.reset({
-        emailOrPhone: 'email',
+        type: 'email',
         email: 'mail@mail.com',
         phone: {value: '89000000000', disabled: true}
       });
@@ -80,7 +80,7 @@ export class SettingsComponent implements OnInit {
   }
 
   radioBtnHandler(): void {
-    if (this.settingsForm.value.notification.emailOrPhone === 'email') {
+    if (this.settingsForm.value.notification.type === 'email') {
       this.notGroupControl.email.enable();
       this.notGroupControl.phone.disable();
     } else {
@@ -96,7 +96,7 @@ export class SettingsComponent implements OnInit {
       psevdo: this.user.name,
       enableNotification: false,
       notification: {
-        emailOrPhone: 'email',
+        type: 'email',
         email: 'mail@mail.com',
         phone: '89000000000',
       }
@@ -106,9 +106,9 @@ export class SettingsComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log(this.settingsForm.value);
-    this.requestService.setSettings(this.settingsForm.value)
-    .subscribe((val) => console.log('response: ', val))
+    const body = { id: this.userId, name: this.user.name, ...this.settingsForm.value };
+    this.requestService.setSettings(body)
+      .subscribe((val) => console.log('response: ', val));
   }
 
   formInput(): void {
