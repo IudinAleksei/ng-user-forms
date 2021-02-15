@@ -89,6 +89,7 @@ export class SettingsComponent implements OnInit {
               this.settingsForm.patchValue({
                 ...this.userSettings
               });
+              this.radioBtnHandler();
             } else {
               this.router.navigate(['error']);
               console.warn('HTTP Error: ', err);
@@ -99,6 +100,7 @@ export class SettingsComponent implements OnInit {
             this.settingsForm.patchValue({
               ...this.userSettings
             });
+            this.radioBtnHandler();
             requestSettings.unsubscribe();
           }
     );
@@ -112,6 +114,7 @@ export class SettingsComponent implements OnInit {
     const notControl = this.settingsForm.controls.notification;
     if (this.settingsForm.value.enableNotification) {
       notControl.enable();
+      this.radioBtnHandler();
     } else {
       notControl.disable();
     }
@@ -126,7 +129,6 @@ export class SettingsComponent implements OnInit {
       this.notGroupControl.email.disable();
       this.notGroupControl.phone.enable();
       this.notGroupControl.phone.setValidators([Validators.required, Validators.maxLength(11), Validators.pattern(/^89\d*$/)]);
-      console.log(this.notGroupControl.phone);
     }
   }
 
