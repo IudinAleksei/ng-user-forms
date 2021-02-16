@@ -40,8 +40,9 @@ export class MainComponent implements OnInit {
 
   selectUser(user: IUser): void {
     this.selectedUser = user;
-    this.cdr.detectChanges();
+
     this.dataService.writeUser(user.id);
+    this.cdr.detectChanges();
   }
 
   getUsers(): void {
@@ -49,7 +50,7 @@ export class MainComponent implements OnInit {
         .subscribe(
           res => {
             this.users = res;
-            this.selectedUser = this.users[0];
+            this.selectedUser = this.users[this.dataService.readUser() - 1];
             this.cdr.detectChanges();
           },
           err => {

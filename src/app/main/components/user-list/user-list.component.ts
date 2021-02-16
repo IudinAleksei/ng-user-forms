@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IService, IUser, IUserService } from './../../../core/models/request.model';
+import { IService, IUser } from './../../../core/models/request.model';
 
 @Component({
   selector: 'app-user-list',
