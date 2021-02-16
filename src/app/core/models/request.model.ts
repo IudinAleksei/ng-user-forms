@@ -1,9 +1,3 @@
-// export interface IRequest {
-//   settings: {};
-//   users: IUser[];
-//   services: IService[];
-// }
-
 export interface IService {
   id: number;
   title: string;

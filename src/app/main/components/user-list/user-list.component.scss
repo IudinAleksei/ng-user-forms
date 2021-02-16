@@ -5,10 +5,15 @@
 .user-item {
   height: 80px;
   margin-bottom: 1rem;
+  transition: 0.3s all;
   cursor: pointer;
 }
 
 .user-item__services {
   display: flex;
   justify-content: space-between;
+}
+
+.selected {
+  filter: drop-shadow(5px 5px 1px #999) brightness(1.2);
 }

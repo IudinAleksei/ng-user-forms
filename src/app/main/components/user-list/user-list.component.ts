@@ -10,6 +10,7 @@ import { IService, IUser } from './../../../core/models/request.model';
 export class UserListComponent implements OnInit {
   @Input() users: IUser[];
   @Input() services: IService[];
+  @Input() selectedUserId: number;
   @Output() selectUserEvent = new EventEmitter<IUser>();
 
   constructor() { }
@@ -18,6 +19,7 @@ export class UserListComponent implements OnInit {
   }
 
   userClickHandler(user: IUser): void {
+    this.selectedUserId = user.id;
     this.selectUserEvent.emit(user);
   }
 }
