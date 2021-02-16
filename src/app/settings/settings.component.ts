@@ -153,6 +153,7 @@ export class SettingsComponent implements OnInit {
       .subscribe(
         res => {
           this.userSettings = res;
+          this.alreadyOnServer = true;
 
           this.cdr.detectChanges();
         },
