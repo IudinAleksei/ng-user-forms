@@ -3,3 +3,18 @@
 html,
 body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@media (max-width: 479px) {
+  .mat-list-item-content {
+    padding: 0 !important;
+  }
+
+  .mat-list-item {
+    margin-bottom: 0.4rem;
+  }
+
+  .mat-icon-button {
+    width: 24px !important;
+    height: 24px !important;
+  }
+}

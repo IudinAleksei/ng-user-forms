@@ -33,6 +33,7 @@ export class MainComponent implements OnInit {
           err => {
             this.router.navigate(['error']);
             console.warn('HTTP Error: ', err);
+            requestServices.unsubscribe();
           },
           () => requestServices.unsubscribe()
       );
@@ -56,6 +57,7 @@ export class MainComponent implements OnInit {
           err => {
             this.router.navigate(['error']);
             console.warn('HTTP Error: ', err);
+            requestUsers.unsubscribe();
           },
           () => requestUsers.unsubscribe()
     );

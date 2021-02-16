@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { ConvertDataService } from './../../../core/services/convert-data.service';
 import { FilterServicePipe } from './../../pipes/filter-service.pipe';
 import { IUser, IService, IUserService } from './../../../core/models/request.model';
@@ -12,10 +13,11 @@ import { RequestService } from './../../../core/services/request.service';
   providers: [FilterServicePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ServiceListComponent implements OnInit, OnChanges {
+export class ServiceListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() user: IUser;
   @Input() services: IService[];
   @Output() changeUserServices = new EventEmitter<void>();
+  subscriptions: Subscription = new Subscription();
   enabledServices: IUserService[];
   disabledServices: IUserService[];
   isChanged = false;
@@ -44,12 +46,16 @@ export class ServiceListComponent implements OnInit, OnChanges {
     this.serviceForm.controls.disabled = this.fb.group({});
     this.disabledServices.forEach(service => (
       this.serviceForm.controls.disabled as FormGroup).addControl(`${service.id}`, this.fb.control(false)));
-    this.serviceForm.controls.disabled.valueChanges
-      .subscribe(() => this.isChanged = true);
+    this.subscriptions.add(this.serviceForm.controls.disabled.valueChanges
+      .subscribe(() => this.isChanged = true));
 
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   clearFind(): void {
@@ -67,8 +73,8 @@ export class ServiceListComponent implements OnInit, OnChanges {
     const updatedUser = { ...this.user, enabledServices: updatedServices };
     delete updatedUser.servicesEnableDates[id];
 
-    this.requestService.updateUser(this.user.id, updatedUser)
-      .subscribe(() => this.serviceClickHandler());
+    this.subscriptions.add(this.requestService.updateUser(this.user.id, updatedUser)
+    .subscribe(() => this.serviceClickHandler()));
   }
 
   onSubmit(): void {
@@ -81,11 +87,11 @@ export class ServiceListComponent implements OnInit, OnChanges {
 
     addedServices.forEach(id => updatedUser.servicesEnableDates[id] = Date.now());
 
-    this.requestService.updateUser(this.user.id, updatedUser)
+    this.subscriptions.add(this.requestService.updateUser(this.user.id, updatedUser)
       .subscribe(() => {
         this.isChanged = false;
         this.serviceClickHandler();
-      });
+      }));
   }
 
 }

@@ -15,7 +15,9 @@
 
 .enabled-service__date-title {
   flex-grow: 1;
-  flex-shrink: 1;
+  width: 10px;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 .enabled-service__fee-button {
@@ -42,4 +44,12 @@
 .empty-message {
   width: 100%;
   text-align: center;
+}
+
+@media (max-width: 479px) {
+  .enabled-service,
+  .disabled-service {
+    font-size: 0.9rem;
+
+  }
 }
