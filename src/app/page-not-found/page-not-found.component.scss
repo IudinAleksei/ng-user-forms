@@ -1,11 +1,10 @@
 .page-not-found {
-  height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   justify-content: center;
+  height: calc(100vh - 80px);
 
   &__message {
     font-size: 2rem;
   }
 }
-p
